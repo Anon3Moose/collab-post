@@ -23,6 +23,7 @@ $(document).ready(function() {
     getPosts();
   }
 
+
   // This function grabs posts from the database and updates the view
   function getPosts(collab) {
     collabId = collab || "";
@@ -34,7 +35,8 @@ $(document).ready(function() {
       posts = data;
       if (!posts || !posts.length) {
         displayEmpty(collab);
-      } else {
+      }
+      else {
         initializeRows();
       }
     });
@@ -45,9 +47,10 @@ $(document).ready(function() {
     $.ajax({
       method: "DELETE",
       url: "/api/posts/" + id
-    }).then(function() {
-      getPosts(postCategorySelect.val());
-    });
+    })
+      .then(function() {
+        getPosts(postCategorySelect.val());
+      });
   }
 
   // InitializeRows handles appending all of our constructed post HTML inside blogContainer
@@ -81,7 +84,8 @@ $(document).ready(function() {
     newPostCollab.css({
       float: "right",
       color: "blue",
-      "margin-top": "-10px"
+      "margin-top":
+      "-10px"
     });
     var newPostCardBody = $("<div>");
     newPostCardBody.addClass("card-body");
@@ -103,14 +107,20 @@ $(document).ready(function() {
 
   // This function figures out which post we want to delete and then calls deletePost
   function handlePostDelete() {
-    var currentPost = $(this).parent().parent().data("post");
+    var currentPost = $(this)
+      .parent()
+      .parent()
+      .data("post");
     deletePost(currentPost.id);
   }
 
   // This function figures out which post we want to edit and takes it to the appropriate url
   function handlePostEdit() {
-    var currentPost = $(this).parent().parent().data("post");
-      window.location.href = "/cms?post_id=" + currentPost.id;
+    var currentPost = $(this)
+      .parent()
+      .parent()
+      .data("post");
+    window.location.href = "/cms?post_id=" + currentPost.id;
   }
 
   // This function displays a message when there are no posts
@@ -121,10 +131,11 @@ $(document).ready(function() {
       partial = " for Collab #" + id;
     }
     blogContainer.empty();
-
     var messageH2 = $("<h2>");
     messageH2.css({ "text-align": "center", "margin-top": "50px" });
-    messageH2.html("No posts yet" + partial + ", navigate <a href='/cms" + query + "'>here</a> in order to get started.");
+    messageH2.html("No posts yet" + partial + ", click <a href='/cms" + query +
+    "'>here</a> to get started.");
     blogContainer.append(messageH2);
   }
+
 });
